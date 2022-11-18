@@ -70,12 +70,6 @@ int main() {
               cudaGetErrorString(err));
       exit(EXIT_FAILURE);
     }
-    err = cudaMemset(d_C, 0, M * N * sizeof(float));
-    if (err != cudaSuccess) {
-      fprintf(stderr, "Failed to cudaMemset 0 to device vector C (error code %s)!\n",
-              cudaGetErrorString(err));
-      exit(EXIT_FAILURE);
-    }
 
     auto start = std::chrono::high_resolution_clock::now();
     
