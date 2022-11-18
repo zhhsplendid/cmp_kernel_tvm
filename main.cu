@@ -12,7 +12,7 @@ int main() {
   int K = 1024;
   int N = 1024;
 
-  int REPEAT_TIMES = 100;
+  int REPEAT_TIMES = 10000;
 
   cudaError_t err = cudaSuccess;
 
@@ -75,11 +75,11 @@ int main() {
     
     // NOTE: call cinn/tvm kernel to test
 
-    //cinn_matmul_1024x1024<<<2, 16>>>(d_A, d_B, d_C); 
-    cinn_matmul_1024x1024_bind_schedule<<<1024, 1024>>>(d_A, d_B, d_C);
+   //cinn_matmul_1024x1024<<<1024, 128>>>(d_A, d_B, d_C); 
+   // cinn_matmul_1024x1024_bind_schedule<<<1024, 1024>>>(d_A, d_B, d_C);
     
     //tvm_matmul_1024x1024_meta_schedule<<<512, 128>>>(d_A, d_B, d_C);
-    //tvm_matmul_1024x1024_auto_schedule<<<128, 512>>>(d_A, d_B, d_C);
+    tvm_matmul_1024x1024_auto_schedule<<<128, 512>>>(d_A, d_B, d_C);
   
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
